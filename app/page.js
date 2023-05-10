@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import homeIcon from "../public/icons/home.svg"
 import contactIcon from "../public/icons/contact.svg"
 import signupIcon from "../public/icons/signup.svg"
@@ -10,7 +10,21 @@ import languagesData from "../public/json/languages.json"
 
 export default function Home() {
   const [isParametersOpen, setIsParametersOpen] = useState(true);
+  const [screenshotURL, setScreenshotURL] = useState("");
+
+  const formRef = useRef();
   
+  const handleSubmit = async event => {
+    event.preventDefault();
+    if (!formRef.current.url.value) return; 
+
+    const response = await fetch(`/api/${formRef.current.url.value}`);
+    const data = await response.json();
+    console.log(data);
+
+  }
+
+
   return (
     <main className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
       {/* laptop and desktop navbar*/}
@@ -34,18 +48,21 @@ export default function Home() {
       </div>
 
       <article className="h-full w-full min-h-[90vh] flex bg-black flex-col md:items-center lg:py-8">
-        <form className="flex flex-col gap-4 md:gap-8 w-full items-center">
-          <section className="flex flex-col w-full md:w-3/4 lg:w-1/2 p-4 gap-4 md:gap-8 md:items-center">
-            <h1 className="text-xl text-center md:text-3xl">website crawler and summarizer</h1>
-            <input autoFocus type="text" name="url" className="w-full p-4 border-4 rounded outline-none text-gray-500" placeholder="https://example.com/123"/>
-            <button type="submit" className="text-xl p-4 bg-green-700 rounded w-full">Submit</button>
+        <form ref={formRef} className="flex flex-col gap-4 md:gap-8 w-full items-center">
+          <section className="flex flex-col w-full md:w-3/4 lg:w-1/2 p-4 gap-8 md:gap-16 md:items-center">
+            <div className="flex flex-col text-center gap-2">
+              <h1 className="text-xl text-center md:text-4xl">Valal Summarize</h1>
+              <p className="text-gray-500">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error ullam beatae reprehenderit sint ea aut. Sit placeat beatae minus provident!</p>
+            </div>
+            <input autoFocus type="text" name="url" className="w-full p-4 bg-transparent border-b border-gray-500  outline-none text-white" placeholder="https://example.com/123"/>
+            <button onClick={handleSubmit} className="text-xl p-4 bg-green-700 rounded w-full">Submit</button>
           </section>
 
           <section className={"flex flex-col gap-4 md:gap-8 p-4 bg-black2 w-full md:items-center" + (isParametersOpen ? "" : "hidden")}>
             <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2  ">
               <label htmlFor="language" className="text-xl">Language</label>
               <select name="language" id="language" defaultValue={"English"} className="p-4 rounded outline-none text-gray-500">
-                {languagesData.languages.map(language => <option key={language.code} value={language.name}>{language.name}</option>)}
+                {languagesData.languages.map((language, index) => <option key={index} value={language.name}>{language.name}</option>)}
               </select>
             </div>
             <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2 ">
