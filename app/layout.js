@@ -4,8 +4,9 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'ValalSummarize',
+  title: 'Valal-Summarize',
   description: 'Valal - Your one-stop-shop for concise and accurate summaries of web pages!',
+  
 }
 
 export default function RootLayout({ children }) {

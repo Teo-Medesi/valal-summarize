@@ -7,6 +7,7 @@ import feedbackIcon from "../public/icons/feedback.svg";
 import aboutIcon from "../public/icons/about.svg";
 import Image from "next/image";
 import languagesData from "../public/json/languages.json";
+import logo from "../public/logo/logo-dark.svg"
 
 export default function Home() {
   const [isParametersOpen, setIsParametersOpen] = useState(true);
@@ -32,9 +33,7 @@ export default function Home() {
       {/* laptop and desktop navbar*/}
       <nav className="hidden md:flex min-h-[10vh] text-xl bg-black px-16 items-center min-w-screen justify-between">
         <div className="flex gap-8 items-center">
-          <h1 className="text-2xl text-white bg-green-700 p-1 px-6 rounded uppercase bold">
-            Valal
-          </h1>
+        <Image src={logo} alt="Valal logo" className="h-28 w-28"/>
           <ul className="flex gap-4">
             <li className="hover:text-green-700">
               <a href="#">Home</a>
@@ -57,11 +56,11 @@ export default function Home() {
         </div>
       </nav>
 
-      <div className="md:hidden flex justify-center items-center min-h-[10vh] text-3xl text-white bg-green-700">
-        <h1>Valal</h1>
+      <div className="md:hidden flex justify-center items-center text-3xl text-white bg-black ">
+        <Image src={logo} alt="Valal logo" className="h-28 w-28"/>
       </div>
 
-      <article className="h-full w-full min-h-[90vh] flex bg-black flex-col md:items-center lg:py-16">
+      <article className="h-full w-full min-h-[90vh] flex bg-black flex-col md:items-center py-4 lg:py-16">
         <form
           ref={formRef}
           className="flex flex-col gap-4 md:gap-8 w-full items-center">
@@ -70,7 +69,7 @@ export default function Home() {
               <h1 className="text-xl text-center md:text-4xl">
                 Valal Summarize
               </h1>
-              <p className="text-gray-500">
+              <p className="text-left lg:text-center text-gray-500">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error
                 ullam beatae reprehenderit sint ea aut. Sit placeat beatae minus
                 provident!
