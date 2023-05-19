@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import crawlWebsite from "./crawl.cjs";
 
 export async function POST(request) {
-  const req = await request.json();
-  const response = await crawlWebsite(req.body.url);
+  const body = await request.json();
+  const image = await fetch(`https://image.thum.io/get/${body.url}`);
 
-  NextResponse(response);
+  return NextResponse.json({ screenshot: image });
 }
