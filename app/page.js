@@ -7,11 +7,11 @@ import feedbackIcon from "../public/icons/feedback.svg";
 import aboutIcon from "../public/icons/about.svg";
 import Image from "next/image";
 import languagesData from "../public/json/languages.json";
-import logo from "../public/logo/logo-dark.svg"
+import logo from "../public/logo/logo-dark.svg";
 
 export default function Home() {
   const [isParametersOpen, setIsParametersOpen] = useState(true);
-  const [URL, setURL] = useState("");
+  const [ImageURL, setImageURL] = useState("");
 
   const formRef = useRef();
 
@@ -19,7 +19,7 @@ export default function Home() {
     event.preventDefault();
     if (!formRef.current.url.value) return;
 
-    const response = await fetch("/api", {
+    const response = await fetch("/api/crawl", {
       method: "POST",
       body: JSON.stringify({ url: formRef.current.url.value }),
     });
@@ -28,12 +28,27 @@ export default function Home() {
     console.log(data);
   };
 
+  const handlePreview = async (event) => {
+    const url = event.target.value;
+
+    const response = await fetch("/api/screenshot", {
+      method: "POST",
+      body: JSON.stringify({ url }),
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log(data);
+      setImageURL(data.url);
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
       {/* laptop and desktop navbar*/}
       <nav className="hidden md:flex min-h-[10vh] text-xl bg-black px-16 items-center min-w-screen justify-between">
         <div className="flex gap-8 items-center">
-        <Image src={logo} alt="Valal logo" className="h-28 w-28"/>
+          <Image src={logo} alt="Valal logo" className="h-28 w-28" />
           <ul className="flex gap-4">
             <li className="hover:text-green-700">
               <a href="#">Home</a>
@@ -57,7 +72,7 @@ export default function Home() {
       </nav>
 
       <div className="md:hidden flex justify-center items-center text-3xl text-white bg-black ">
-        <Image src={logo} alt="Valal logo" className="h-28 w-28"/>
+        <Image src={logo} alt="Valal logo" className="h-28 w-28" />
       </div>
 
       <article className="h-full w-full min-h-[90vh] flex bg-black flex-col md:items-center py-4 lg:py-16">
@@ -81,7 +96,7 @@ export default function Home() {
               name="url"
               className="w-full p-4 bg-transparent border-b border-gray-500  outline-none text-white"
               placeholder="https://example.com/123"
-              onChange={(event) => setURL(event.target.value)}
+              onChange={handlePreview}
             />
             <button
               onClick={handleSubmit}
@@ -90,9 +105,9 @@ export default function Home() {
             </button>
 
             <img
-              src={URL ? `https://thum.io/get/${URL}` : ""}
+              src={ImageURL ? ImageURL : ""}
               alt="preview image"
-              className={URL ? "" : "hidden"}
+              className={ImageURL ? "" : "hidden"}
             />
           </section>
 
