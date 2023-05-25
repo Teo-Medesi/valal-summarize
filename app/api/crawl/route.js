@@ -6,14 +6,24 @@ export async function POST(request) {
   const website = await fetch(body.url);
   const html = await website.text();
 
+    // testing if url is valid
+  const regex = /(https?:\/\/)?([\da-z\.-]+)\.([a-z]{2,6})([\/\w\.-]*)*\/?/;
+  if (!regex.test(body.url)) return NextResponse.json({}, {status: 404, statusText: "invalid URL" , });
+
+  // testing if website exists
+  const response = await fetch(body.url);
+  if (!response.ok) return NextResponse.json({}, {status: 404, statusText: "website not found"});
+
   // parsing text from html
   const $ = cheerio.load(html);
   let text = "";
 
+  // we only want to get the most important and information heavy elements, such as headers and paragraphs
   $("h1, h2, h3, h4, h5, h6, pre, p").each((index, element) => {
-    const item = $(element).text();
-    console.log(item);
+    // we use trim() in order to remove all unneeded white space
+    const item = $(element).text().trim();
 
+    // ||| is used as a separater so that GPT can better understand the text
     text = text.concat(item, " ||| ");
   });
 
@@ -22,8 +32,6 @@ export async function POST(request) {
 
   // if the text is longer than our maxLength, we will trim it off
   const output = text.length >= maxLength ? text.substring(0, maxLength) : text;
-
-  console.log(output);
 
   return NextResponse.json({ output });
 }

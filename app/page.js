@@ -36,9 +36,10 @@ export default function Home() {
       body: JSON.stringify({ url }),
     });
 
+    const data = await response.json();
+    console.log(data);
+    
     if (response.status === 200) {
-      const data = await response.json();
-      console.log(data);
       setImageURL(data.url);
     }
   };

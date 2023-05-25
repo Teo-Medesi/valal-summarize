@@ -6,11 +6,11 @@ export async function POST(request) {
   
   // testing if url is valid
   const regex = /(https?:\/\/)?([\da-z\.-]+)\.([a-z]{2,6})([\/\w\.-]*)*\/?/;
-  if (!regex.test(body.url)) throw new Error("400 - Invalid URL");
+  if (!regex.test(body.url)) return NextResponse.json({}, {status: 404, statusText: "invalid URL" , });
 
   // testing if website exists
   const response = await fetch(body.url);
-  if (!response.ok) throw new Error("404 - Website not found.");
+  if (!response.ok) return NextResponse.json({}, {status: 404, statusText: "website not found"});
   
   const imageURL = getThumURL({
     url: body.url,
@@ -24,5 +24,5 @@ export async function POST(request) {
   });
 
 
-  return NextResponse.json({ url: imageURL });
+  return NextResponse.json({ url: imageURL }, {status: 200});
 }
