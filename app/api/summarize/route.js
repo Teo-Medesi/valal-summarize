@@ -1,5 +1,6 @@
 import cheerio from "cheerio";
 import { NextResponse } from "next/server";
+import summarize from "./completion";
 
 export async function POST(request) {
   const body = await request.json();
@@ -31,7 +32,13 @@ export async function POST(request) {
   const maxLength = 1500;
 
   // if the text is longer than our maxLength, we will trim it off
-  const output = text.length >= maxLength ? text.substring(0, maxLength) : text;
+  const input = text.length >= maxLength ? text.substring(0, maxLength) : text;
 
-  return NextResponse.json({ output });
+  try {
+    const summary = await summarize(input, {language: body.options.language, length: body.options.length, custom: body.options.custom, temperature: body.options.temperature});
+    return NextResponse.json({summary: summary});
+  }
+  catch (error) {
+    return NextResponse.json({error: error}, {status: 500, statusText: "Completion error."});
+  }
 }

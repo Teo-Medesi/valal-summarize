@@ -19,9 +19,19 @@ export default function Home() {
     event.preventDefault();
     if (!formRef.current.url.value) return;
 
-    const response = await fetch("/api/crawl", {
+    const response = await fetch("/api/summarize", {
       method: "POST",
-      body: JSON.stringify({ url: formRef.current.url.value }),
+      body: JSON.stringify({
+        url: formRef.current.url.value,
+        options: {
+            language: formRef.current.language.value,
+            length: formRef.current.length.value,
+            temperature: formRef.current.temperature.value,
+            custom: formRef.current.custom.value
+        } 
+
+      }),
+
     });
 
     const data = await response.json();
@@ -153,12 +163,29 @@ export default function Home() {
               </label>
               <input
                 type="text"
-                name="custom prompt"
+                name="custom"
                 id="custom prompt"
                 className="p-4 rounded outline-none text-gray-500"
                 placeholder="enter additional prompt here"
               />
             </div>
+            <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2 ">
+              <label htmlFor="temperature" className="text-xl">
+                Temperature
+              </label>
+              <select
+                name="temperature"
+                id="temperature"
+                defaultValue={0.75}
+                className="p-4 rounded outline-none text-gray-500">
+                  <option value={0}>Highly deterministic</option>
+                  <option value={0.25}>deterministic</option>
+                  <option value={0.5}>Neutral</option>
+                  <option value={0.75}>Creative</option>
+                  <option value={1}>Highly Creative</option>
+              </select>
+            </div>
+
           </section>
         </form>
       </article>
