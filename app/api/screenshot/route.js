@@ -23,6 +23,9 @@ export async function POST(request) {
     protocol: "https",
   });
 
+  // testing if website exists
+  const thumResponse = await fetch(imageURL);
+  if (!thumResponse) return NextResponse.json({response: thumResponse}, {status: 500, statusText: "failed to receive image from thum.io"});
 
   return NextResponse.json({ url: imageURL }, {status: 200});
 }
