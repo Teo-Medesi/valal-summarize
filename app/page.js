@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { Configuration, OpenAIApi } from "openai";
 import homeIcon from "../public/icons/home.svg";
 import contactIcon from "../public/icons/contact.svg";
 import signupIcon from "../public/icons/signup.svg";
@@ -29,7 +30,6 @@ export default function Home() {
             temperature: formRef.current.temperature.value,
             custom: formRef.current.custom.value
         } 
-
       }),
 
     });
@@ -53,6 +53,23 @@ export default function Home() {
       setImageURL(data.url);
     }
   };
+
+  const handleTest = async event  => {
+    event.preventDefault();
+    
+    const configuration = new Configuration({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: "Say this is a test",
+      temperature: 0,
+      max_tokens: 7,
+    });
+
+    console.log(response)
+  }
 
   return (
     <main className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
@@ -114,6 +131,8 @@ export default function Home() {
               className="text-xl p-4 bg-green-700 rounded w-full">
               Submit
             </button>
+
+            <button className="text-xl p-4 bg-green-700 rounded w-full" onClick={handleTest}>Test</button>
 
             <img
               src={ImageURL ? ImageURL : ""}

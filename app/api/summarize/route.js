@@ -39,6 +39,7 @@ export async function POST(request) {
     return NextResponse.json({summary: summary});
   }
   catch (error) {
-    return NextResponse.json({error: error}, {status: 500, statusText: "Completion error."});
+    // note to self: attaching the caught error to the body doesn't work for some reason, the caught error must be in the response init object
+    return NextResponse.json({}, {status: 500, statusText: error});
   }
 }
