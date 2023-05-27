@@ -6,7 +6,7 @@ const summarize = async (input, options = {language, length, temperature, custom
     if (!input || !options.language || !options.length || !options.temperature) throw new Error("Missing input or parameters!");
 
 
-    const prompt = generatePrompt( input, {
+    const messages = generateMessages( input, {
         language:  options.language,
         length:  options.length,
         custom:  options.custom
@@ -16,25 +16,21 @@ const summarize = async (input, options = {language, length, temperature, custom
         apiKey: process.env.OPENAI_API_KEY
     });
     
-    const openai = new OpenAIApi(configuration);
-
-    const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: "Say this is a test",
-        temperature: 0,
-        max_tokens: 7,
+    const openai = new OpenAIApi(configuration); 
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        temperature: parseInt(options.temperature),
+        messages: messages
     })
 
-    const completion_text = completion.data.choices[0].text;
-
-    return completion_text;
+    return completion.data.choices[0].message.content;
 }
 
-const generatePrompt = (input, options = {language, length, custom}) => {
+const generateMessages = (input, options = {language, length, custom}) => {
     if (!input || !options) throw new Error("input or options undefined!");
     if (input.length > 1550) throw new Error("Input text is too long!");
     
-    const prompt = `You are a website summarizer bot. I will provide you with raw html text from a website and you will FIRST describe what the website is about it and then SECONDLY give a summary. The website text that I provide you with will consist of headers and paragraphs, each and every header or paragraph will be separated with this symbol: |||
+    const prompt = `I will provide you with raw html text from a website and you will FIRST describe what the website is about it and then SECONDLY give a summary. The website text that I provide you with will consist of headers and paragraphs, each and every header or paragraph will be separated with this symbol: |||
 
     the format of your answer will be as follows:
     "
@@ -55,8 +51,12 @@ const generatePrompt = (input, options = {language, length, custom}) => {
     WEBSITE TEXT: ${input}
     `
 
-    return prompt;
+    const messages = [
+        { role: "system", content: "You are a website summarizer bot" }, 
+        { role: "user", content: prompt}
+    ]
 
+    return messages;
 }
 
 export default summarize;
