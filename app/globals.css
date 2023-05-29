@@ -35,3 +35,25 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.shapedivider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.shapedivider svg {
+  position: relative;
+  display: block;
+  width: calc(153% + 1.3px);
+  height: 137px;
+}
+
+.shapedivider .shape-fill {
+  fill: #15803D;
+}
