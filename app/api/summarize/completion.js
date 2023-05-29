@@ -28,7 +28,6 @@ const summarize = async (input, options = {language, length, temperature, custom
 
 const generateMessages = (input, options = {language, length, custom}) => {
     if (!input || !options) throw new Error("input or options undefined!");
-    if (input.length > 1550) throw new Error("Input text is too long!");
     
     const prompt = `I will provide you with raw html text from a website and you will FIRST describe what the website is about it and then SECONDLY give a summary. The website text that I provide you with will consist of headers and paragraphs, each and every header or paragraph will be separated with this symbol: |||
 

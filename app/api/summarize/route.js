@@ -29,7 +29,7 @@ export async function POST(request) {
   });
 
   // max number of characters that our html text should be for our GPT API call including the prompt length
-  const maxLength = 1500;
+  const maxLength = 3500;
 
   // if the text is longer than our maxLength, we will trim it off
   const input = text.length >= maxLength ? text.substring(0, maxLength) : text;
