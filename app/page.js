@@ -1,6 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
+import Skeleton from 'react-loading-skeleton'
+import { motion, useAnimate } from "framer-motion";
 import homeIcon from "../public/icons/home.svg";
 import contactIcon from "../public/icons/contact.svg";
 import signupIcon from "../public/icons/signup.svg";
@@ -9,14 +11,17 @@ import aboutIcon from "../public/icons/about.svg";
 import Image from "next/image";
 import languagesData from "../public/json/languages.json";
 import logo from "../public/logo/logo-dark.svg";
-import Skeleton from 'react-loading-skeleton'
+import copyIcon from "../public/icons/copy.svg"
 import 'react-loading-skeleton/dist/skeleton.css'
+import copyToClipboard from "./components/copyToClipboard";
+
 
 export default function Home() {
   const [isParametersOpen, setIsParametersOpen] = useState(true);
   const [ImageURL, setImageURL] = useState("");
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [scope, animate] = useAnimate();
 
   const formRef = useRef();
 
@@ -60,8 +65,15 @@ export default function Home() {
     }
   };
 
+  const handleCopyToClipboard = async () => {
+    await copyToClipboard(summary);
+
+    await animate(".banner", {opacity: 1}, {duration: 0.5});
+    await animate(".banner", {opacity: 0}, {delay: 1, duration: 2})
+  }
+
   return (
-    <main className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
+    <main ref={scope} className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
       {/* laptop and desktop navbar*/}
       <nav className="hidden md:flex max-h-[10vh] text-xl bg-black px-16 items-center min-w-screen justify-between">
         <div className="flex gap-8 items-center">
@@ -121,7 +133,17 @@ export default function Home() {
                 className="text-xl p-4 bg-green-700 rounded w-full">
                 Submit
               </button>
-              <p className={"bg-white overflow-y-scroll text-black w-full rounded text-xl border-b-8 border-b-green-700 p-8 " + ((isLoading || summary) ? "" : "hidden")}>{summary || <Skeleton count={8} baseColor="#ffffff" highlightColor="#15803D"/>}</p>
+
+              
+              <div className={"bg-white flex flex-col gap-4 text-black w-full rounded text-xl border-b-8 border-b-green-700 p-8 "  + ((isLoading || summary) ? "" : "hidden")}> 
+                <p>{summary || <Skeleton count={8} baseColor="#ffffff" highlightColor="#15803D"/>}</p>
+                <div onClick={handleCopyToClipboard} className="flex justify-end w-full cursor-pointer"><Image src={copyIcon} alt="copy to clipboard icon" className="w-16 h-16 p-2 hover:bg-green-500 rounded-full transition-colors duration-300"/></div>
+              </div>
+              
+              <div className="w-screen h-screen  pointer-events-none fixed left-0 bottom-0 pb-8 flex justify-center items-end">
+                <motion.p initial={{opacity: 0}} className="banner bg-green-700 w-1/2 text-center py-2 rounded">Copied to clipboard?</motion.p>
+              </div>
+               
               <img
                 src={ImageURL ? ImageURL : ""}
                 alt="preview image"
