@@ -78,15 +78,15 @@ export default function Home() {
       <nav className="hidden md:flex max-h-[10vh] text-xl bg-black px-16 items-center min-w-screen justify-between">
         <div className="flex gap-8 items-center">
           <Image src={logo} alt="Valal logo" className="h-28 w-28" />
-          <ul className="flex gap-4">
-            <li className="hover:text-green-700">
+          <ul className="flex gap-8">
+            <li className="hover:text-green-500 underline-after hover:after:w-full">
               <a href="#">Home</a>
             </li>
-            <li className="hover:text-green-700">
-              <a href="#">About</a>
+            <li className="hover:text-green-500 underline-after hover:after:w-full">
+              <a href="https://teo-medesi.vercel.app">Portfolio</a>
             </li>
-            <li className="hover:text-green-700">
-              <a href="#">Contact</a>
+            <li className="hover:text-green-500 underline-after hover:after:w-full">
+              <a href="#">API</a>
             </li>
           </ul>
         </div>
@@ -166,7 +166,7 @@ export default function Home() {
               "flex flex-col gap-4 md:gap-8 p-4 bg-black2 w-full md:items-center" +
               (isParametersOpen ? "" : "hidden")
             }>
-            <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2  ">
+            <div className="flex flex-col gap-2 md:ccw-3/4 lg:w-1/2  ">
               <label htmlFor="language" className="text-xl">
                 Language
               </label>

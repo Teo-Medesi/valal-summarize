@@ -57,3 +57,21 @@ body {
 .shapedivider .shape-fill {
   fill: #15803D;
 }
+
+.underline-after {
+  position: relative;
+}
+
+.underline-after::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 2rem;
+  height: 1rem;
+  border-top: 4px solid #15803D;
+  width: 0%;
+  transition: 0.5s;
+}
+
