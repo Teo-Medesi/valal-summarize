@@ -14,6 +14,7 @@ import logo from "../public/logo/logo-dark.svg";
 import copyIcon from "../public/icons/copy.svg"
 import 'react-loading-skeleton/dist/skeleton.css'
 import copyToClipboard from "./components/copyToClipboard";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -94,9 +95,9 @@ export default function Home() {
           <button className="border-gray-400 text-gray-400 hover:border-white hover:text-white border rounded p-4">
             Feedback
           </button>
-          <button className="rounded hover:rounded-xl p-4 uppercase bg-green-700">
+          <Link href={"http://localhost:3000/api/auth/login"} className="rounded hover:rounded-xl p-4 uppercase bg-green-700">
             Sign Up
-          </button>
+          </Link>
         </div>
       </nav>
 
