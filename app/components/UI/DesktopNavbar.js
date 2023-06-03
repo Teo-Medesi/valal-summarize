@@ -1,4 +1,4 @@
-import logo from "../../public/logo/logo-dark.svg";
+import logo from "../../../public/logo/logo-dark.svg";
 import Image from "next/image";
 import { useAuth0 } from "@auth0/auth0-react";
 import Link from "next/link";

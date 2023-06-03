@@ -1,7 +1,7 @@
 "use client"
-import DesktopNavbar from './components/DesktopNavbar'
-import MobileNavbar from './components/MobileNavbar'
-import MobileBanner from './components/MobileBanner'
+import DesktopNavbar from './components/UI/DesktopNavbar'
+import MobileNavbar from './components/UI/MobileNavbar'
+import MobileBanner from './components/UI/MobileBanner'
 import { Auth0Provider } from '@auth0/auth0-react'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <body className={inter.className}>
           <DesktopNavbar />
           <MobileBanner />
-          {children}
+          <main className='h-[90vh]'>{children}</main>
           <MobileNavbar />
         </body>
       </Auth0Provider>
