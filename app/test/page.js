@@ -1,5 +1,5 @@
 "use client"
-import Protected from "../components/Protected"
+import Protected from "../components/Restricted"
 
 export default function Test() {
   return <Protected />
