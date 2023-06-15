@@ -2,7 +2,14 @@
 export default function API() {
 
 
-  // connect project with supabase, make new user table for API
+  /* 
+  
+    connect project with supabase, make new user table for API
+    user table, connects with API table
+    API table has secret key
+
+    the user table will be filled out with the requests that they make, how many tokens per request they spend
+  */
 
   return (
     <article className="w-full">
