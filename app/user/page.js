@@ -6,7 +6,7 @@ export default function Settings() {
 
   return (
     <article className="flex flex-col gap-8 basis-1/2 py-5">
-      <h1>Account Settings</h1>
+      <h1>Account Info</h1>
 
       <div className="flex items-center">
         <label htmlFor="username" className="text-xl basis-1/3 ">Profile Picture: </label>

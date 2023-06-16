@@ -11,9 +11,8 @@ export default function UserLayout({ children }) {
     <section className="flex py-10 px-4">
       <nav className="flex basis-1/4">
         <ul className="w-full flex flex-col gap-4 items-center">
-          <li className="text-xl p-4 px-8 border border-black3 hover:border-green-700 cursor-pointer text-center w-1/2 rounded"><Link href={"/user"}>Settings</Link></li>
+          <li className="text-xl p-4 px-8 border border-black3 hover:border-green-700 cursor-pointer text-center w-1/2 rounded"><Link href={"/user"}>Info</Link></li>
           <li className="text-xl p-4 px-8 border border-black3 hover:border-green-700 cursor-pointer text-center w-1/2 rounded"><Link href={"/user/api"}>API</Link></li>
-          <li className="text-xl p-4 px-8 border border-black3 hover:border-green-700 cursor-pointer text-center w-1/2 rounded"><Link href={"/user/subscription"}>Subscription</Link></li>
         </ul>
       </nav>
       <div className="basis-1/2">{children}</div>
