@@ -13,10 +13,21 @@ export default function API() {
 
         POST https://valal-summarize.vercel.app/api/summarize
         
+        url,
+        options: {
+          language, 
+          length, 
+          temperature, 
+          custom, 
+        }
+
+
       returns a summary of a website, should be able to summarize more than 1 website at a time
         
         POST https://valal-summarize.vercel.app/api/screenshot
       
+        url, 
+
       only accesible to the back-end, not to the user
 
       all of these routes should be protectedw with API keys, that is only if they are made from a foreign origin

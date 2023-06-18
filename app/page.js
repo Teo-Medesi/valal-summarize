@@ -37,6 +37,9 @@ export default function Home() {
           custom: formRef.current.custom.value
         }
       }),
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
 
     const data = await response.json();
