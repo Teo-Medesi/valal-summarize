@@ -16,6 +16,7 @@ export default function Home() {
   const [summary, setSummary] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [scope, animate] = useAnimate();
+  const { user } = useAuth0();
 
   const formRef = useRef();
 
@@ -69,6 +70,22 @@ export default function Home() {
     await animate(".banner", { opacity: 0 }, { delay: 1, duration: 2 })
   }
 
+  // debug
+  const handleTest = async event => {
+    event.preventDefault();
+
+    const url = "http://example.com";
+
+    const response = await fetch("/api/test", {
+      method: "POST",
+      body: JSON.stringify({ url, user })
+    })
+
+    const data = await response.json();
+    console.log(data);
+
+  }
+
   return (
     <main ref={scope} className="flex min-h-screen flex-col overflow-x-hidden bg-black2">
 
@@ -100,6 +117,14 @@ export default function Home() {
                 onClick={handleSubmit}
                 className="text-xl p-4 bg-green-700 rounded w-full">
                 Submit
+              </button>
+
+
+              {/* debug */}
+              <button
+                onClick={handleTest}
+                className="text-xl p-4 bg-green-500 rounded w-full">
+                Test
               </button>
 
 
