@@ -1,9 +1,7 @@
-
-
-// let's plan out our API again
-
+"use client"
+import Loading from "@/app/components/Loading";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { useState } from "react";
 /* 
 
 everything will be done with POST
@@ -47,10 +45,12 @@ export default function API() {
   const { user } = useAuth0();
   const [isKeyGenerated, setIsKeyGenerated] = useState(false);
   const [tempKeyPreview, setTempKeyPreview] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   const createNewKey = async event => {
-    event.preventDefault();
+    event.preventDefault()
+    setIsLoading(true);
 
     const response = await fetch("/api/create-new-key", {
       method: "POST",
@@ -62,8 +62,9 @@ export default function API() {
 
     const data = await response.json();
     if (response.ok) {
+      console.log(data)
       setIsKeyGenerated(true);
-      setTempKeyPreview(data.keyPreview);
+      setTempKeyPreview(data.key);
     }
     else {
       setError(response.error);
@@ -73,18 +74,50 @@ export default function API() {
   }
 
   return (
-    <article className="w-full flex flex-col gap-4">
+    <article className="flex flex-col gap-8 basis-1/2 py-5">
       <h1>API</h1>
 
       <div className="w-full flex flex-col gap-4 items-center">
-        <p>You have no active API keys</p>
-        <button onClick={createNewKey} className="text-xl p-4 px-8 bg-green-700 w-max rounded">Create New API Key</button>
+        {
+          isKeyGenerated
+            ?
+            (
+              <div className="w-full gap-8 flex flex-col">
+                <div className="flex items-center">
+                  <p className="text-xl basis-1/3 ">API key: </p>
+                  <span className="p-4 outline-none rounded bg-black3 w-full">{tempKeyPreview}</span>
+                </div>
+
+                <div className="flex items-center">
+                  <label htmlFor="username" className="text-xl  basis-1/3">Referrer Domain: </label>
+                  <input placeholder="https://example.com" type="text" className="p-4 outline-none rounded bg-black3 w-full" />
+                </div>
+
+                <div className="flex items-center">
+                  <label htmlFor="username" className="text-xl  basis-1/3">Description </label>
+                  <textarea placeholder="What are you going to use this API for?" type="text" className="p-4 h-32 outline-none rounded bg-black3 w-full" />
+                </div>
+
+              </div>
+            )
+            :
+            isLoading
+              ?
+              (
+                <Loading classname="mt-20" />
+              )
+              :
+              (
+                <div className="flex flex-col mt-20 gap-4 text-center">
+                  <p>You have no active API keys</p>
+                  <button onClick={createNewKey} className="text-xl p-4 px-8 bg-green-700 w-max rounded">Create New API Key</button>
+                </div>
+              )
+        }
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 hidden">
         <h1>Documentation</h1>
-
-
 
       </div>
     </article>
