@@ -9,13 +9,15 @@ export async function POST(request) {
     const body = await request.json();
     const key = crypto.randomUUID();
 
-    await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${body.user.sub}`, {
+    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${body.user.sub}`, {
       method: 'PATCH',
-      headers: { authorization: 'Bearer ABCD', 'content-type': 'application/json' },
-      data: { user_metadata: { auth: { API_Key: key } } }
+      headers: { "Authorization": `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_metadata: { auth: { API_Key: key } } })
     });
 
-    return NextResponse.json({ message: "success", key, user: body.user }, { status: 200 });
+    const data = await response.json();
+
+    return NextResponse.json({ message: "success", key, user: body.user, data }, { status: 200 });
   }
   catch (error) {
     return NextResponse.json({ error }, { status: 400 })
