@@ -52,7 +52,7 @@ export default function API() {
     event.preventDefault()
     setIsLoading(true);
 
-    const response = await fetch("/api/create-new-key", {
+    const response = await fetch("/api/user/metadata/create-new-key", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
