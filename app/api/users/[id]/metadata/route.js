@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
 
-// user_id, new metadata 
+// new metadata 
 
-export async function PATCH(request) {
+// WORKING
+
+export async function PATCH(request, { params }) {
   try {
     const body = await request.json();
 
-    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${body.user_id}`, {
+    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'PATCH',
       headers: { "Authorization": `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_metadata: body.metadata })
+      body: JSON.stringify({ app_metadata: body.new_metadata })
     });
 
     return NextResponse.json({ message: "updated successfuly" }, { status: 200 })
@@ -20,19 +22,16 @@ export async function PATCH(request) {
   }
 }
 
-export async function GET(request) {
+export async function GET(request, { params }) {
   try {
-    const { searchParams } = new URL(request.url)
-    const id = searchParams.get("id");
-
-    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${id}`, {
+    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'GET',
       headers: { "Authorization": `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`, 'Content-Type': 'application/json' },
     });
 
-    const data = await response.json();
+    const user = await response.json();
 
-    return NextResponse.json(data, { status: 200 });
+    return NextResponse.json({ app_metadata: user.app_metadata }, { status: 200 });
   }
   catch (error) {
     return NextResponse.json({ error }, { status: 400 })

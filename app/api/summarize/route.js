@@ -2,11 +2,15 @@ import cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import summarize from "./completion";
 
-export async function POST(request) {
+// body => options, url => language, temperature, length, custom
+
+export async function POST(request, { params }) {
   try {
     const body = await request.json();
     const website = await fetch(body.url);
     const html = await website.text();
+
+    const options = body.options || { language: "English", length: "Medium - 2-4 sentences", temperature: 0.5, custom: "none" }
 
     // parsing text from html
     const $ = cheerio.load(html);
@@ -27,11 +31,11 @@ export async function POST(request) {
     // if the text is longer than our maxLength, we will trim it off
     const input = text.length >= maxLength ? text.substring(0, maxLength) : text;
 
-    const summary = await summarize(input, { language: body.options.language, length: body.options.length, custom: body.options.custom, temperature: body.options.temperature });
-    return NextResponse.json({ summary: summary });
+    const summary = await summarize(input, options);
+    return NextResponse.json({ summary });
   }
   catch (error) {
     // note to self: attaching the caught error to the body doesn't work for some reason, the caught error must be in the response init object
-    return NextResponse.json({}, { status: 500, statusText: error });
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

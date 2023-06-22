@@ -37,5 +37,5 @@ export async function middleware(request) {
 
 // defining which routes we want to intercept
 export const config = {
-  matcher: ["/api/screenshot", "/api/summarize"],
+  matcher: ["/api/summarize"],
 }

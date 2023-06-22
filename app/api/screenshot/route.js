@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 import { getThumURL } from "thum.io";
 
-export async function POST(request) {
+// url is in query params GET /api/screenshot?url=http://example.com
+
+export async function GET(request) {
   try {
-
-    // protecting against CORS (screenshot should only be accessible to our server)
-    //if (request.headers.get("origin") !== request.headers.get("host")) return NextResponse.json({ message: "Forbidden" }, { status: 403 })
-
-    const body = await request.json();
+    const url = new URL(request.url).searchParams.get("url");
 
     const imageURL = getThumURL({
-      url: body.url,
+      url: url,
       width: 1200,
       auth: {
         type: "referer",
@@ -20,9 +18,9 @@ export async function POST(request) {
       protocol: "https",
     });
 
-    return NextResponse.json({ url: imageURL, origin: request.headers.get("origin") }, { status: 200 });
+    return NextResponse.json({ url: imageURL }, { status: 200 });
 
   } catch (error) {
-    return NextResponse.json({ message: "Error", error }, { status: 400 })
+    return NextResponse.json({ error }, { status: 400 })
   }
 }
