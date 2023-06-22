@@ -5,7 +5,7 @@ import { getThumURL } from "thum.io";
 
 export async function GET(request) {
   try {
-    const url = new URL(request.url).searchParams.get("url");
+    const url = request.nextUrl.searchParams.get("url");
 
     const imageURL = getThumURL({
       url: url,
