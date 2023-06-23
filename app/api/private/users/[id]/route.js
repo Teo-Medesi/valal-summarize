@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 
-// user_id = params.id  /api/users/[id]/
+// user_id = params.id  /api/private/users/[id]/
 
 export async function GET(request, { params }) {
+
   try {
     const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'GET',
