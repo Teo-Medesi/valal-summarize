@@ -27,11 +27,17 @@ export default function Home() {
     if (isAuthenticated && !userMetadata) getUserMetadata();
   }, [isAuthenticated]);
 
+  const createUserMetadata = async () => {
+    await fetch(`/api/public/users/${user.sub}/metadata/create-new-key`, { method: "POST" })
+    getUserMetadata();
+  }
+
   const getUserMetadata = async () => {
-    const response = await fetch(`api/public/users/${user.sub}/metadata`)
+    const response = await fetch(`/api/public/users/${user.sub}/metadata`)
     const metadata = await response.json();
 
-    setUserMetadata(metadata.app_metadata);
+    if (Object.keys(metadata).length === 0) createUserMetadata();
+    else setUserMetadata(metadata.app_metadata);
   }
 
   const handleSubmit = async (event) => {
