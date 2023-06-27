@@ -82,9 +82,24 @@ export default function API() {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col gap-4">
         <h1>Documentation</h1>
+        <div>
+          <h3 className="text-green-700">Introduction</h3>
+          <p>This API is useful for extracting meaningful information from or getting a description of one or more websites. Alongside summarization and extraction, users can also get screenshots of websites</p>
+        </div>
+        <div>
+          <h3 className="text-green-700">Authorization</h3>
+          <p>
+            In order to make requests, an <span className="text-green-700 font-bold">Authorization</span> header is required in each request.
+            The value of the header must be an <span className="text-green-700 font-bold">object in JSON format</span> that contains the values <span className="text-green-700 font-bold">"API_key"</span> and <span className="text-green-700 font-bold">"user_id"</span>
+            The required values can be found on the top of this page.
+          </p>
+          <code className="p-4 rounded">
+            Authorization: {'API_key': 'bdaa9333-e036-4b93-8bfd-bb67cde5287c', 'user_id': 'google-oauth|1630521205030529502'}
+          </code>
 
+        </div>
       </div>
     </article>
   )
