@@ -8,7 +8,9 @@ export async function PATCH(request, { params }) {
   try {
     const body = await request.json();
 
-    const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
+    if (!body.new_metadata || Object.keys(body.new_metadata).length === 0) return NextResponse.json({ error: "Missing new_metadata" })
+
+    await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'PATCH',
       headers: { "Authorization": `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ app_metadata: body.new_metadata })
