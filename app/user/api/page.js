@@ -26,7 +26,6 @@ export default function API() {
   const getUserMetadata = async () => {
     const response = await fetch(`/api/public/users/${user.sub}/metadata`)
     const metadata = await response.json();
-
     setMetadata(metadata.app_metadata);
     setIsLoading(false);
   }
@@ -42,29 +41,48 @@ export default function API() {
 
         <div className="w-full gap-8 flex flex-col">
           <div className="flex items-center">
-            <p className="text-xl basis-1/3 ">API key: </p>
+            <p className="text-xl basis-1/3 ">API Key: </p>
             <span onClick={() => handleCopyToClipboard(metadata.auth.API_key)} className="p-4 outline-none cursor-pointer rounded bg-black3 w-full">{metadata.auth.API_key}</span>
           </div>
 
-          <div className="flex items-center">
-            <p className="text-xl basis-1/3 ">User ID: </p>
-            <span onClick={() => handleCopyToClipboard(user.sub)} className="p-4 outline-none cursor-pointer rounded bg-black3 w-full">{user.sub}</span>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <p className="text-xl basis-1/3 ">User ID: </p>
+              <span onClick={() => handleCopyToClipboard(user.sub)} className="p-4 outline-none cursor-pointer rounded bg-black3 w-full">{user.sub}</span>
+            </div>
+            <p className="text-gray-400">See <span className="font-bold italic">Documentation</span> for more information</p>
           </div>
 
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <p className="text-xl basis-1/3 ">Rate Limit: </p>
+              <span className="p-4 outline-none rounded bg-black3 w-full">{metadata.rate_limit || 100}</span>
+            </div>
+            <p className="text-gray-400">The amount of requests that you can make this month. This website is just for my portfolio so the limit is 100.</p>
+          </div>
+
+
           <div className="flex items-center">
-            <label htmlFor="username" className="text-xl  basis-1/3">Referrer Domain: </label>
-            <input placeholder="https://example.com" type="text" className="p-4 outline-none rounded bg-black3 w-full" />
+            <p className="text-xl basis-1/3 ">Remaining: </p>
+            <span className="p-4 outline-none rounded bg-black3 w-full">{(metadata.rate_limit - metadata.requests_made) || 100}</span>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <label htmlFor="username" className="text-xl  basis-1/3">Referrer Domain: </label>
+              <input placeholder="https://example.com" type="text" className="p-4 outline-none rounded bg-black3 w-full" />
+            </div>
+            <p className="text-gray-400">The domain from which you are planning on using this API.</p>
           </div>
 
           <div className="flex items-center">
             <label htmlFor="username" className="text-xl  basis-1/3">Description </label>
             <textarea placeholder="What are you going to use this API for?" type="text" className="p-4 h-32 outline-none rounded bg-black3 w-full" />
           </div>
-
         </div>
       </div>
 
-      <div className="mt-8 hidden">
+      <div className="mt-8">
         <h1>Documentation</h1>
 
       </div>
