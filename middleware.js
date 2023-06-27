@@ -24,22 +24,21 @@ export async function middleware(request) {
     catch (error) {
       return NextResponse.json({ message: "Unauthorized", error: "Invalid user_id" }, { status: 401 })
     }
-  }
 
-  if (request.nextUrl.pathname.startsWith("/api/private/extract")) {
     try {
-      const body = await request.json();
+      // checking if the url is in the request body or in the query params
+      const url = request.nextUrl.pathname.startsWith("/api/private/extract") ? (await request.json()).url : request.nextUrl.searchParams.get("url")
 
       // URL validation
-      if (!body.url) return NextResponse.json({ message: "Missing body URL" }, { status: 400 });
+      if (!url) return NextResponse.json({ message: "Missing URL" }, { status: 400 });
 
       // testing if url is valid (faster than sending a GET request to the website to see if it exists)
       const regex = /(https?:\/\/)?([\da-z\.-]+)\.([a-z]{2,6})([\/\w\.-]*)*\/?/;
-      if (!regex.test(body.url)) return NextResponse.json({ message: "Invalid URL" }, { status: 404 });
+      if (!regex.test(url)) return NextResponse.json({ message: "Invalid URL" }, { status: 404 });
 
       try {
         // testing if website exists, using HEAD as we don't want to waste bandwidth
-        await fetch(body.url, { method: "HEAD" })
+        await fetch(url, { method: "HEAD" })
       }
       catch (error) {
         return NextResponse.json({ message: "Website not found" }, { status: 404 });
@@ -49,22 +48,6 @@ export async function middleware(request) {
     catch (error) {
       return NextResponse.json({ message: "Invalid JSON", error }, { status: 400 });
     }
+
   }
-
-  if (request.nextUrl.pathname.startsWith("/api/private/screenshot")) {
-    if (!request.nextUrl.searchParams.get("url")) return NextResponse.json({ message: "Missing body URL" }, { status: 400 });
-
-    // testing if url is valid (faster than sending a GET request to the website to see if it exists)
-    const regex = /(https?:\/\/)?([\da-z\.-]+)\.([a-z]{2,6})([\/\w\.-]*)*\/?/;
-    if (!regex.test(request.nextUrl.searchParams.get("url"))) return NextResponse.json({ message: "Invalid URL" }, { status: 404 });
-
-    try {
-      // testing if website exists, using HEAD as we don't want to waste bandwidth
-      await fetch(request.nextUrl.searchParams.get("url"), { method: "HEAD" })
-    }
-    catch (error) {
-      return NextResponse.json({ message: "Website not found" }, { status: 404 });
-    }
-  }
-
 }

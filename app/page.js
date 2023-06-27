@@ -13,13 +13,16 @@ import Restricted from "./components/Restricted";
 
 export default function Home() {
   const [isParametersOpen, setIsParametersOpen] = useState(true);
+
   const [ImageURL, setImageURL] = useState("");
   const [summary, setSummary] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [scope, animate] = useAnimate();
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [description, setDescription] = useState("");
   const [userMetadata, setUserMetadata] = useState(null);
   const { user, isAuthenticated } = useAuth0();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [scope, animate] = useAnimate();
 
   const formRef = useRef();
 
@@ -42,6 +45,8 @@ export default function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    summary != "" && setSummary("");
+    description != "" && setDescription("");
 
     if (!isAuthenticated) {
       setIsAuthModalOpen(true);
@@ -70,7 +75,8 @@ export default function Home() {
     });
 
     const data = await response.json();
-    setSummary(data.summary);
+    setSummary(data.website_summary);
+    setDescription(data.website_description);
   };
 
   const handlePreview = async (event) => {
@@ -131,7 +137,18 @@ export default function Home() {
                 </button>
 
                 <div className={"bg-white flex flex-col gap-4 text-black w-full rounded text-xl border-b-8 border-b-green-700 p-8 " + ((isLoading || summary) ? "" : "hidden")}>
-                  <p>{summary || <Skeleton count={8} baseColor="#ffffff" highlightColor="#15803D" />}</p>
+                  {
+                    summary || description
+                      ?
+                      (
+                        <>
+                          <p><span className="text-green-700 font-bold">Description</span>: {description} </p>
+                          <p><span className="text-green-700 font-bold">Summary</span>: {summary}</p>
+                        </>
+                      )
+                      :
+                      < Skeleton count={8} baseColor="#ffffff" highlightColor="#15803D" />
+                  }
                   <div onClick={handleCopyToClipboard} className="flex justify-end w-full cursor-pointer"><Image src={copyIcon} alt="copy to clipboard icon" className="w-16 h-16 p-2 hover:bg-green-500 rounded-full transition-colors duration-300" /></div>
                 </div>
 
