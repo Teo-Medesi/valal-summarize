@@ -82,7 +82,7 @@ export default function API() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-4">
+      <div className="mt-8 flex h-screen flex-col gap-4">
         <h1>Documentation</h1>
         <div>
           <h3 className="text-green-700">Introduction</h3>
@@ -93,13 +93,20 @@ export default function API() {
           <p>
             In order to make requests, an <span className="text-green-700 font-bold">Authorization</span> header is required in each request.
             The value of the header must be an <span className="text-green-700 font-bold">object in JSON format</span> that contains the values <span className="text-green-700 font-bold">"API_key"</span> and <span className="text-green-700 font-bold">"user_id"</span>
-            The required values can be found on the top of this page.
+            The required values can be found at the top of this page or in the example below.
           </p>
-          <code className="p-4 rounded">
-            Authorization: {'API_key': 'bdaa9333-e036-4b93-8bfd-bb67cde5287c', 'user_id': 'google-oauth|1630521205030529502'}
-          </code>
 
+          <div className="mt-8 p-2 white whitespace-pre-line text-orange-200 rounded bg-black3"><span className="text-green-700">Authorization</span>: {'{'} {"\n"} '<span className="text-green-700">API_key</span>': '{metadata.auth.API_key}', {"\n"} '<span className="text-green-700">user_id</span>': '{user.sub}' {"\n"} {'}'}</div>
         </div>
+        <div>
+          <h3 className=" mt-8">Available Endpoints</h3>
+          <div>
+            <p className="p-4 bg-black2 text-xl rounded mt-8"> <span className="text-orange-400 mr-4">POST</span> /api/private/extract</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti officiis provident quia, ipsa at nostrum eveniet, hic maiores quis dolores neque aliquid perferendis deserunt!</p>
+          </div>
+        </div>
+
+
       </div>
     </article>
   )
