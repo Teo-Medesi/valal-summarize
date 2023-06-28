@@ -38,12 +38,15 @@ body {
 
 h1 {
   @apply text-4xl;
+  @apply mt-8;
 }
 h2 {
   @apply text-3xl;
+  @apply mt-6;
 }
 h3 {
   @apply text-2xl;
+  @apply mt-4;
 }
 
 

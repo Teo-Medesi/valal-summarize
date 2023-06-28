@@ -1,9 +1,12 @@
 "use client"
 import Loading from "@/app/components/Loading";
 import copyToClipboard from "@/app/utils/copyToClipboard";
+import Prism from 'prismjs'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAnimate, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import 'prismjs/themes/prism-coldark-dark.css'
+import 'prismjs/components/prism-javascript'
 
 export default function API() {
   const { user } = useAuth0();
@@ -15,6 +18,11 @@ export default function API() {
   useEffect(() => {
     if (user) getUserMetadata();
   }, [user])
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [])
+  
 
   const handleCopyToClipboard = async (text) => {
     await copyToClipboard(text);
@@ -32,7 +40,7 @@ export default function API() {
 
   if (!isLoading) return (
     <article ref={scope} className="flex flex-col gap-8 basis-1/2 py-5">
-      <h1>API</h1>
+      <h1 className="text-green-700">API</h1>
 
       <div className="w-full flex flex-col gap-4 items-center">
         <div className="w-screen h-screen  pointer-events-none fixed left-0 bottom-0 pb-8 flex justify-center items-end">
@@ -82,7 +90,7 @@ export default function API() {
         </div>
       </div>
 
-      <div className="mt-8 flex h-screen flex-col gap-4">
+      <div className=" flex h-[300vh] flex-col gap-4">
         <h1>Documentation</h1>
         <div>
           <h3 className="text-green-700">Introduction</h3>
@@ -96,17 +104,126 @@ export default function API() {
             The required values can be found at the top of this page or in the example below.
           </p>
 
-          <div className="mt-8 p-2 white whitespace-pre-line text-orange-200 rounded bg-black3"><span className="text-green-700">Authorization</span>: {'{'} {"\n"} '<span className="text-green-700">API_key</span>': '{metadata.auth.API_key}', {"\n"} '<span className="text-green-700">user_id</span>': '{user.sub}' {"\n"} {'}'}</div>
-        </div>
-        <div>
-          <h3 className=" mt-8">Available Endpoints</h3>
-          <div>
-            <p className="p-4 bg-black2 text-xl rounded mt-8"> <span className="text-orange-400 mr-4">POST</span> /api/private/extract</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti officiis provident quia, ipsa at nostrum eveniet, hic maiores quis dolores neque aliquid perferendis deserunt!</p>
+          <div className="mt-8">
+            <pre>
+              <code className="language-javascript">
+                {`
+Authorization: JSON.stringify({
+  API_key: process.env.API_KEY,
+  user_id: process.env.USER_ID
+  })
+                `}
+              </code>
+            </pre>
           </div>
         </div>
 
+        <div>
+          <h2 className="">Available Endpoints</h2>
+         <section>
+           <div className="mt-8">
+             <p className="p-4 bg-black2 text-xl rounded "> <span className="text-orange-400 mr-4">POST</span> /api/private/extract</p>
+             <p className="mt-4">Used for extracting meaningful text (paragraphs and headers) from websites.</p>
+             <p>Requires <span className="text-green-700 font-bold">url</span> in the request body.</p>
+           </div>
+           
+           <h3>Example request</h3>
+           <div className="mt-8">
+             <pre> 
+               <code className="language-javascript">
+                 {`
+const response = await fetch("http://localhost:3000/api/private/extract", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": JSON.stringify({
+      API_key: process.env.API_KEY,
+      user_id: process.env.USER_ID
+    })
+  },
+  body: JSON.stringify({url: "http://example.com"})
+});
 
+const data = await response.json();
+                 `}
+               </code>
+             </pre>
+           </div>
+         </section>
+         <section>
+           <div className="mt-8">
+             <p className="p-4 bg-black2 text-xl rounded "> <span className="text-orange-400 mr-4">POST</span> /api/private/extract/summarize</p>
+             <p className="mt-4">Describe and summarize the content of a web page.</p>
+             <p>Requires <span className="text-green-700 font-bold">url</span> in the request body.</p>
+           </div>
+           
+           <h3>Example request</h3>
+           <div className="mt-8">
+             <pre> 
+               <code className="language-javascript">
+                 {`
+const response = await fetch("http://localhost:3000/api/private/extract/summarize", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": JSON.stringify({
+      API_key: process.env.API_KEY,
+      user_id: process.env.USER_ID
+    })
+  },
+  body: JSON.stringify({url: "http://example.com"})
+});
+
+const data = await response.json();
+                 `}
+               </code>
+             </pre>
+           </div>
+         </section>
+         <section>
+           <div className="mt-8">
+             <p className="p-4 bg-black2 text-xl rounded "> <span className="text-green-700 mr-4">GET</span> /api/private/screenshot?url</p>
+             <p className="mt-4">Get a 16:9 screenshot of a webpage</p>
+             <p>Requires <span className="text-green-700 font-bold">url</span> as a query parameter.</p>
+           </div>
+           
+           <h3>Example request</h3>
+           <div className="mt-8">
+             <pre> 
+               <code className="language-javascript">
+                 {`
+const response = await fetch("http://localhost:3000/api/private/screenshot?url=http://example.com", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": JSON.stringify({
+      API_key: process.env.API_KEY,
+      user_id: process.env.USER_ID
+    })
+});
+
+const data = await response.json();
+                 `}
+               </code>
+             </pre>
+           </div>
+         </section>
+
+
+        </div>
+
+        <div>
+          <h2>Rate Limiting</h2>
+          <p className="whitespace-pre-line">
+            This website is created primarily for my portfolio and therefore for now I have set a rate limit of 100 for the 
+            <span className="text-green-700"> /summarize</span> and <span className="text-green-700">/screenshot</span> endpoint.
+
+            {'\n\n'}If you wish to use this service seriously, feel free to contact me for additional information.
+
+            {'\n\n'}With each request you will receive a <span className="text-green-700">X-RateLimit-Limit</span> and a <span className="text-green-700">X_RateLimit-Remaining</span> header
+            so that you can keep track of the amount of requests you can make.
+          </p>
+        </div>
       </div>
     </article>
   )
