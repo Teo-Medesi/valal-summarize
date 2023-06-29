@@ -103,17 +103,17 @@ export default function Home() {
 
   return (
     <>
-      {isAuthModalOpen && <div className="z-30 fixed left-0 bottom-0 w-screen h-screen flex justify-center items-center"><div className="w-1/2 h-2/3 bg-black2 shadow-md shadow-black2 border-t-8 border-t-green-700 rounded-t rounded-b-xl border-"><Restricted /></div></div>}
+      {isAuthModalOpen && <div className="z-30 p-4 md:p-0 fixed left-0 bottom-0 w-screen h-screen flex justify-center items-center"><div className="w-full md:w-3/4 lg:w-2/3 h-1/2 md:h-2/3 bg-black2 shadow-md shadow-black2 border-t-8 border-t-green-700 rounded-t rounded-b-xl text-center"><Restricted /></div></div>}
       <main ref={scope} className={"flex min-h-screen flex-col overflow-x-hidden bg-black2 " + (isAuthModalOpen && "brightness-50")}>
 
-        <article className="h-full w-full flex bg-black flex-col md:items-center py-4 lg:py-16">
+        <article className="h-full w-full flex bg-black flex-col md:items-center pt-4 lg:pt-16">
           <form
             ref={formRef}
             className="flex flex-col gap-4 md:gap-8 w-full items-center">
             <section className="w-full flex flex-col items-center">
               <div className="flex flex-col w-full md:w-3/4 lg:w-1/2 p-4 gap-8 md:gap-16 md:items-center">
                 <div className="flex flex-col text-center gap-2">
-                  <h1 className="text-xl text-center md:text-4xl">
+                  <h1 className="text-xl text-center hidden md:block md:text-4xl">
                     Valal Summarize
                   </h1>
                   <p className="text-left lg:text-center text-gray-500">
@@ -136,7 +136,7 @@ export default function Home() {
                   Submit
                 </button>
 
-                <div className={"bg-white flex flex-col gap-4 text-black w-full rounded text-xl border-b-8 border-b-green-700 p-8 " + ((isLoading || summary) ? "" : "hidden")}>
+                <div className={"bg-white flex flex-col gap-4 text-black w-full rounded text-xl border-b-8 border-b-green-700 p-4 md:p-8 " + ((isLoading || summary) ? "" : "hidden")}>
                   {
                     summary || description
                       ?
@@ -175,7 +175,7 @@ export default function Home() {
 
             <section
               className={
-                "flex flex-col gap-4 md:gap-8 p-4 bg-black2 w-full md:items-center" +
+                "flex flex-col gap-4 md:gap-8 p-4 pb-32 md:pb-4 bg-black2 w-full md:items-center" +
                 (isParametersOpen ? "" : "hidden")
               }>
               <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2  ">

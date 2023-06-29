@@ -213,7 +213,7 @@ const data = await response.json();
         </div>
 
         <div>
-          <h2>Rate Limiting</h2>
+          <h2 className="text-green-700">Rate Limiting</h2>
           <p className="whitespace-pre-line">
             This website is created primarily for my portfolio and therefore for now I have set a rate limit of 100 for the 
             <span className="text-green-700"> /summarize</span> and <span className="text-green-700">/screenshot</span> endpoint.

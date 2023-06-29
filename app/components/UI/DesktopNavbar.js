@@ -3,11 +3,11 @@ import Image from "next/image";
 import { useAuth0 } from "@auth0/auth0-react";
 import Link from "next/link";
 
-const DesktopNavbar = () => {
+const DesktopNavbar = ({className}) => {
   const { loginWithRedirect, user, isAuthenticated } = useAuth0();
 
   return (
-    <nav className="hidden border-b border-b-black3 md:flex max-h-[10vh] text-xl bg-black px-16 items-center min-w-screen justify-between">
+    <nav className={"hidden border-b border-b-black3 md:flex text-xl bg-black px-16 items-center min-w-screen justify-between " + className}>
       <div className="flex gap-8 items-center">
         <Image src={logo} alt="Valal logo" className="h-24 w-24" />
         <ul className="flex gap-8">

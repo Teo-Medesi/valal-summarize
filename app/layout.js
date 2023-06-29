@@ -37,10 +37,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className='overflow-x-hidden'>
       <Auth0Provider clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID} domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN} authorizationParams={{ redirect_uri: window.location.origin }}>
         <body className={inter.className}>
-          <DesktopNavbar />
-          <MobileBanner />
-          <main className='h-[90vh]'>{children}</main>
-          <MobileNavbar />
+          <DesktopNavbar className="max-h-[10vh]"/>
+          <MobileBanner className="max-h-[10vh]"/>
+          <main className='h-[80vh] md:h-[90vh]'>{children}</main>
+          <MobileNavbar className="max-h-[10vh]"/>
         </body>
       </Auth0Provider>
     </html>
