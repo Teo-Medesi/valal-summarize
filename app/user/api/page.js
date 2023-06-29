@@ -5,7 +5,7 @@ import Prism from 'prismjs'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAnimate, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import 'prismjs/themes/prism-coldark-dark.css'
+import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-javascript'
 
 export default function API() {
