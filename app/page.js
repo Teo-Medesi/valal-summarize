@@ -175,7 +175,7 @@ export default function Home() {
 
             <section
               className={
-                "flex flex-col gap-4 md:gap-8 p-4 pb-32 md:pb-4 bg-black2 w-full md:items-center" +
+                "flex flex-col gap-4 md:gap-8 p-4 pb-32 md:pb-4 w-full md:items-center" +
                 (isParametersOpen ? "" : "hidden")
               }>
               <div className="flex flex-col gap-2 md:w-3/4 lg:w-1/2  ">
