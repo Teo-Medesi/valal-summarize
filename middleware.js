@@ -18,7 +18,7 @@ export async function middleware(request) {
     if (!auth.user_id) return NextResponse.json({ message: "Restricted", error: "Missing user_id in auth object" }, { status: 401 })
 
     try {
-      const response = await fetch(`${domain}/api/public/users/${auth.user_id}/metadata`)
+      const response = await fetch(`/api/public/users/${auth.user_id}/metadata`)
       const metadata = await response.json();
 
       if (!metadata.app_metadata.auth.API_key || metadata.app_metadata.auth.API_key !== auth.API_key) return NextResponse.json({ message: "Forbidden", error: "Invalid API_key" }, { status: 403 });
