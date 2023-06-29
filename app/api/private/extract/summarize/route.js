@@ -9,7 +9,7 @@ import updateMetadata from "./updateMetadata";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const options = body.options || { language: "English", length: "Medium - 2-4 sentences", temperature: 0.5, custom: "none" }
+    const options = body.options || { language: "English", length: "Detailed - 4+ sentences", temperature: 0.5, custom: "none" }
 
     // getting headers and paragraphs from website
     const text = await extract(body.url);

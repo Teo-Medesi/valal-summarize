@@ -10,8 +10,8 @@ export default function UserLayout({ children }) {
   if (isLoading) return <Loading />
   if (!user || !isAuthenticated) return <Restricted />
   return (
-    <section className="flex h-full w-full justify-center py-10 px-4">
-      <div className="basis-full md:basis-1/2">{children}</div>
+    <section className="flex h-full w-full justify-center">
+      <div className="basis-full px-4 md:basis-1/2">{children}</div>
     </section>
   )
 }

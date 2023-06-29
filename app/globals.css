@@ -88,3 +88,12 @@ h3 {
   transition: 0.5s;
 }
 
+@media only screen and (max-width: 768px) {
+  .language-javascript, .example-request, ::-webkit-scrollbar {
+    display: none;
+  }
+
+  h1, h2 {
+    text-align: center;
+  }
+}

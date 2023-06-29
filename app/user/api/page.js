@@ -20,8 +20,8 @@ export default function API() {
   }, [user])
 
   useEffect(() => {
-    Prism.highlightAll();
-  }, [])
+    if(!isLoading) Prism.highlightAll();
+  }, [isLoading])
   
 
   const handleCopyToClipboard = async (text) => {
@@ -39,58 +39,57 @@ export default function API() {
   }
 
   if (!isLoading) return (
-    <article ref={scope} className="flex flex-col gap-8 basis-1/2 py-5">
-      <h1 className="text-green-700">API</h1>
+    <article ref={scope} className="flex flex-col gap-8 md:p-0">
+      <h1 className="text-green-700 text-center md:text-left">API</h1>
 
       <div className="w-full flex flex-col gap-4 items-center">
         <div className="w-screen h-screen  pointer-events-none fixed left-0 bottom-0 pb-8 flex justify-center items-end">
-          <motion.p initial={{ opacity: 0 }} className="banner bg-green-700 w-1/2 text-center py-2 rounded">Copied to clipboard!</motion.p>
+          <motion.p initial={{ opacity: 0 }} className="banner bg-green-700 w-1/2 text-center md:text-left py-2 rounded">Copied to clipboard!</motion.p>
         </div>
 
         <div className="w-full gap-8 flex flex-col">
-          <div className="flex items-center">
+          <div className="flex flex-col md:flex-row items-center">
             <p className="text-xl basis-1/3 ">API Key: </p>
-            <span onClick={() => handleCopyToClipboard(metadata.auth.API_key)} className="p-4 outline-none cursor-pointer rounded bg-black3 w-full">{metadata.auth.API_key}</span>
+            <span onClick={() => handleCopyToClipboard(metadata.auth.API_key)} className="p-4 text-center md:text-left outline-none cursor-pointer rounded bg-black3 w-full">{metadata.auth.API_key}</span>
           </div>
 
           <div className="flex flex-col gap-2">
-            <div className="flex items-center">
+            <div className="flex flex-col md:flex-row items-center">
               <p className="text-xl basis-1/3 ">User ID: </p>
-              <span onClick={() => handleCopyToClipboard(user.sub)} className="p-4 outline-none cursor-pointer rounded bg-black3 w-full">{user.sub}</span>
+              <span onClick={() => handleCopyToClipboard(user.sub)} className="p-4 text-center md:text-left outline-none cursor-pointer rounded bg-black3 w-full">{user.sub}</span>
             </div>
             <p className="text-gray-400">See <span className="font-bold italic">Documentation</span> for more information</p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <div className="flex items-center">
+            <div className="flex flex-col md:flex-row items-center">
               <p className="text-xl basis-1/3 ">Rate Limit: </p>
-              <span className="p-4 outline-none rounded bg-black3 w-full">{metadata.rate_limit || 100}</span>
+              <span className="p-4 outline-none rounded bg-black3 text-center md:text-left w-full">{metadata.rate_limit || 100}</span>
             </div>
             <p className="text-gray-400">The amount of requests that you can make this month. This website is just for my portfolio so the limit is 100.</p>
           </div>
 
-
-          <div className="flex items-center">
+          <div className="flex flex-col md:flex-row items-center">
             <p className="text-xl basis-1/3 ">Remaining: </p>
-            <span className="p-4 outline-none rounded bg-black3 w-full">{(metadata.rate_limit - metadata.requests_made) || 100}</span>
+            <span className="p-4 outline-none rounded bg-black3 w-full text-center md:text-left">{(metadata.rate_limit - metadata.requests_made) || 100}</span>
           </div>
 
           <div className="flex flex-col gap-2">
-            <div className="flex items-center">
+            <div className="flex flex-col md:flex-row items-center">
               <label htmlFor="username" className="text-xl  basis-1/3">Referrer Domain: </label>
-              <input placeholder="https://example.com" type="text" className="p-4 outline-none rounded bg-black3 w-full" />
+              <input placeholder="https://example.com" type="text" className="p-4 outline-none text-center md:text-left rounded bg-black3 w-full" />
             </div>
             <p className="text-gray-400">The domain from which you are planning on using this API.</p>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex flex-col md:flex-row items-center">
             <label htmlFor="username" className="text-xl  basis-1/3">Description </label>
-            <textarea placeholder="What are you going to use this API for?" type="text" className="p-4 h-32 outline-none rounded bg-black3 w-full" />
+            <textarea placeholder="What are you going to use this API for?" type="text" className="p-4 text-center md:text-left h-32 outline-none rounded bg-black3 w-full" />
           </div>
         </div>
       </div>
 
-      <div className=" flex h-[300vh] flex-col gap-4">
+      <div className=" flex flex-col gap-4">
         <h1>Documentation</h1>
         <div>
           <h3 className="text-green-700">Introduction</h3>
@@ -127,7 +126,7 @@ Authorization: JSON.stringify({
              <p>Requires <span className="text-green-700 font-bold">url</span> in the request body.</p>
            </div>
            
-           <h3>Example request</h3>
+           <h3 className="example-request">Example request</h3>
            <div className="mt-8">
              <pre> 
                <code className="language-javascript">
@@ -157,7 +156,7 @@ const data = await response.json();
              <p>Requires <span className="text-green-700 font-bold">url</span> in the request body.</p>
            </div>
            
-           <h3>Example request</h3>
+           <h3 className="example-request">Example request</h3>
            <div className="mt-8">
              <pre> 
                <code className="language-javascript">
@@ -187,7 +186,7 @@ const data = await response.json();
              <p>Requires <span className="text-green-700 font-bold">url</span> as a query parameter.</p>
            </div>
            
-           <h3>Example request</h3>
+           <h3 className="example-request">Example request</h3>
            <div className="mt-8">
              <pre> 
                <code className="language-javascript">
@@ -213,7 +212,7 @@ const data = await response.json();
         </div>
 
         <div>
-          <h2 className="text-green-700">Rate Limiting</h2>
+          <h3 className="text-green-700">Rate Limiting</h3>
           <p className="whitespace-pre-line">
             This website is created primarily for my portfolio and therefore for now I have set a rate limit of 100 for the 
             <span className="text-green-700"> /summarize</span> and <span className="text-green-700">/screenshot</span> endpoint.

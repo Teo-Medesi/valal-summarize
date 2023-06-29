@@ -201,7 +201,7 @@ export default function Home() {
                 <select
                   name="length"
                   id="length"
-                  defaultValue={"medium"}
+                  defaultValue={"detailed"}
                   className="p-4 rounded outline-none text-gray-500">
                   <option value="short">short = 1-2 sentences</option>
                   <option value="medium">medium = 2 - 4 sentences</option>

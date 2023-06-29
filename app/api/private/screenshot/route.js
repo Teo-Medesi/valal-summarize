@@ -11,7 +11,7 @@ export async function GET(request) {
       url: url,
       width: 1200,
       auth: {
-        type: "referer",
+        type: "raw",
         keyId: process.env.THUM_IO_ID,
         secret: process.env.THUM_IO_SECRET,
       },
