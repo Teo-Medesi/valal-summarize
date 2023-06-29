@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function MockLayout({ children }) {
 
   return (
-      <Auth0Provider clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID} domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN} authorizationParams={{ redirect_uri: window.location.origin }}>
+      <Auth0Provider clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID} domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN} authorizationParams={{ redirect_uri: (process.env.MODE === "DEVELOPMENT") ? "http://localhost:3000" : "https://valal-summarize.vercel.app"}}>
         <body className={inter.className + " overflow-x-hidden"}>
           <DesktopNavbar className="max-h-[10vh]"/>
           <MobileBanner className="max-h-[10vh]"/>

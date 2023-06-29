@@ -2,7 +2,7 @@ async function updateMetadata(userID) {
   // we want to send a PATCH request to update or create a new rate_limit object which will include:
   // rate_limit, requests_made
 
-  const domain = (process.env.MODE === "DEVELOPMENT") ? "http://localhost:3000" : ""; 
+  const domain = (process.env.MODE === "DEVELOPMENT") ? "http://localhost:3000" : "https://valal-summarize.vercel.app"; 
 
   const response = await fetch(`${domain}/api/public/users/${userID}/metadata`)
   const data = await response.json();

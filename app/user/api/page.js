@@ -131,7 +131,7 @@ Authorization: JSON.stringify({
              <pre> 
                <code className="language-javascript">
                  {`
-const response = await fetch("http://localhost:3000/api/private/extract", {
+const response = await fetch("https://valal-summarize.vercel.app/api/private/extract", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -161,7 +161,7 @@ const data = await response.json();
              <pre> 
                <code className="language-javascript">
                  {`
-const response = await fetch("http://localhost:3000/api/private/extract/summarize", {
+const response = await fetch("https://valal-summarize.vercel.app/api/private/extract/summarize", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -191,7 +191,7 @@ const data = await response.json();
              <pre> 
                <code className="language-javascript">
                  {`
-const response = await fetch("http://localhost:3000/api/private/screenshot?url=http://example.com", {
+const response = await fetch("https://valal-summarize.vercel.app/api/private/screenshot?url=http://example.com", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
