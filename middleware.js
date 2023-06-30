@@ -5,7 +5,7 @@ TODO FOR 23.6: implement user_id and user API key authentification for api/extra
 */
 
 export async function middleware(request) {
-  const domain = (process.env.MODE === "DEVELOPMENT") ? "http://localhost:3000" : "https://valal-summarize.vercel.app";
+  const domain = (process.env.NEXT_PUBLIC_MODE === "DEVELOPMENT") ? "http://localhost:3000" : "https://valal-summarize.vercel.app";
 
   if (request.nextUrl.pathname.startsWith("/api/private")) {
     const auth = JSON.parse(request.headers.get("Authorization"));
@@ -18,7 +18,7 @@ export async function middleware(request) {
     if (!auth.user_id) return NextResponse.json({ message: "Restricted", error: "Missing user_id in auth object" }, { status: 401 })
 
     try {
-      const response = await fetch(`/api/public/users/${auth.user_id}/metadata`)
+      const response = await fetch(`${domain}/api/public/users/${auth.user_id}/metadata`)
       const metadata = await response.json();
 
       if (!metadata.app_metadata.auth.API_key || metadata.app_metadata.auth.API_key !== auth.API_key) return NextResponse.json({ message: "Forbidden", error: "Invalid API_key" }, { status: 403 });
