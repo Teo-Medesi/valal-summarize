@@ -1,4 +1,4 @@
-import MockLayout from './mock-layout'
+import MockLayout from './app/mock-layout'
 import './globals.css'
 
 export const metadata = {

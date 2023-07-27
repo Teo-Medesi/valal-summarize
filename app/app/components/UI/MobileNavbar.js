@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import homeIcon from "../../../public/icons/home.svg";
-import contactIcon from "../../../public/icons/contact.svg";
-import signupIcon from "../../../public/icons/signup.svg";
-import feedbackIcon from "../../../public/icons/feedback.svg";
-import aboutIcon from "../../../public/icons/about.svg";
-import apiIcon from "../../../public/icons/api2.svg"
+import homeIcon from "../../../../public/icons/home.svg";
+import contactIcon from "../../../../public/icons/contact.svg";
+import signupIcon from "../../../../public/icons/signup.svg";
+import feedbackIcon from "../../../../public/icons/feedback.svg";
+import aboutIcon from "../../../../public/icons/about.svg";
+import apiIcon from "../../../../public/icons/api2.svg"
 import { useAuth0 } from "@auth0/auth0-react";
 
 const MobileNavbar = ({className}) => {

@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
-/*
-TODO FOR 23.6: implement user_id and user API key authentification for api/extract      
-*/
-
 export async function middleware(request) {
   const domain = (process.env.NEXT_PUBLIC_MODE === "DEVELOPMENT") ? "http://localhost:3000" : "https://valal-summarize.vercel.app";
+
+  if (request.nextUrl.pathname.startsWith("/app") && process.env.NEXT_PUBLIC_MAINTENANCE.toUpperCase() === "TRUE") {
+    return NextResponse.redirect(new URL("/maintenance", request.url))
+  }
 
   if (request.nextUrl.pathname.startsWith("/api/private")) {
     const auth = JSON.parse(request.headers.get("Authorization"));

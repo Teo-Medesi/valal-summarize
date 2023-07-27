@@ -1,6 +1,6 @@
 "use client"
-import Loading from "@/app/components/Loading";
-import copyToClipboard from "@/app/utils/copyToClipboard";
+import Loading from "../../components/Loading";
+import copyToClipboard from "../../utils/copyToClipboard";
 import Prism from 'prismjs'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAnimate, motion } from "framer-motion";

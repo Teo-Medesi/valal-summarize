@@ -1,7 +1,7 @@
 "use client"
 import { useAuth0 } from "@auth0/auth0-react"
 import Image from "next/image";
-import cat from "../../public/icons/cat.svg"
+import cat from "../../../public/icons/cat.svg"
 
 const Restricted = ({ className }) => {
   const { loginWithRedirect } = useAuth0();
