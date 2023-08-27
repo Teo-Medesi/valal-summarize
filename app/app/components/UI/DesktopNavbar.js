@@ -18,7 +18,7 @@ const DesktopNavbar = ({className}) => {
             <Link href="https://teo-medesi.vercel.app">Portfolio</Link>
           </li>
           <li className="hover:text-green-500 underline-after hover:after:w-full">
-            <Link href="app/user/api">API</Link>
+            <Link href="/app/user/api">API</Link>
           </li>
         </ul>
       </div>

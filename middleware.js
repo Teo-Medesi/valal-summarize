@@ -59,7 +59,7 @@ export async function middleware(request) {
 
       const response = await fetch(`${domain}/api/public/users/${auth.user_id}/metadata`);
       const metadata = (await response.json()).app_metadata;
-
+      
       // if this is the users first request, then there is no metadata yet so we will skip the middleware
       if (!metadata.requests_made || !metadata.rate_limit) return NextResponse.next();
 
