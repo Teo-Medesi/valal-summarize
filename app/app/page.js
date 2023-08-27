@@ -27,7 +27,7 @@ export default function Home() {
   const formRef = useRef();
 
   useEffect(() => {
-    //if (isAuthenticated && !userMetadata) getUserMetadata();
+    if (isAuthenticated && !userMetadata) getUserMetadata();
   }, [isAuthenticated]);
 
   const createUserMetadata = async () => {
@@ -117,7 +117,7 @@ export default function Home() {
                     Valal Summarize
                   </h1>
                   <p className="text-left lg:text-center text-gray-500">
-                  Valal Summarize: Your Web Content, Supercharged. AI-Powered Summaries in Seconds.
+                    Valal Summarize: Your Web Content, Supercharged. AI-Powered Summaries in Seconds.
                   </p>
                 </div>
                 <input

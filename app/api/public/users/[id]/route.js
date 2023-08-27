@@ -6,11 +6,12 @@ import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
   try {
 
-    const { accessToken } = await getAccessToken()
+    const access_response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/token`);
+    const { access_token } = await access_response.json();
 
     const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'GET',
-      headers: { "Authorization": `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      headers: { "Authorization": `Bearer ${access_token}`, 'Content-Type': 'application/json' },
     });
 
     const user = await response.json();

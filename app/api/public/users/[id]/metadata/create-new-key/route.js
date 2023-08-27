@@ -10,12 +10,12 @@ export async function POST(request, { params }) {
   try {
     const key = crypto.randomUUID();
 
-    const { searchParams } = new URL(request.URL);
-    const token = searchParams.get("token");
+    const access_response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/token`);
+    const { access_token } = await access_response.json();
 
     const response = await fetch(`https://dev-ul7phc0o5syw4wwp.us.auth0.com/api/v2/users/${params.id}`, {
       method: 'PATCH',
-      headers: { "Authorization": `Bearer ${token}`, 'Content-Type': 'application/json' },
+      headers: { "Authorization": `Bearer ${access_token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ app_metadata: { auth: { API_key: key } } })
     });
 
